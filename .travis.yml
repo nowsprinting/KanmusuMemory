@@ -1,0 +1,19 @@
+before_install:
+    - sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
+    - sudo apt-get update -qq
+    - sudo apt-get install -qq qt5-default qttools5-dev-tools qtbase5-dev-tools libqt5webkit5-dev qtdeclarative5-dev libsqlite3-dev
+
+install:
+    - git clone http://cr.qtquick.me/twitter4qml.git
+    - cd twitter4qml
+    - /usr/lib/x86_64-linux-gnu/qt5/bin/syncqt -version 0.1.0
+    - qmake
+    - make
+    - sudo make install
+    - cd ..
+
+script:
+    - cp twitterinfo_sample.h twitterinfo.h
+    - qmake -qt=qt5 -v
+    - qmake -qt=qt5
+    - make
